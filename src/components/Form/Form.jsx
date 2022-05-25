@@ -1,26 +1,39 @@
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { add } from "../Redux/contactsSlise";
+
 import Input from "../Input";
-import PropTypes from "prop-types";
 import PhoneInput from "react-phone-number-input";
-import styled from "styled-components";
+
 import { nanoid } from "nanoid";
 import "react-phone-number-input/style.css";
-import { useSelector, useDispatch } from "react-redux";
-import { add } from "../Redux/store";
+import { FormContainer, BtnSubmit } from "./Form.styled";
 
-export default function Form({ onSubmit }) {
-  const contacts = useSelector((state) => state.contacts.items);
-  const dispatch = useDispatch();
-  console.log(contacts);
-
+const Form = () => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const [id, setId] = useState("");
 
+  const contacts = useSelector((state) => state.contacts.items);
+  const dispatch = useDispatch();
+
+  const handleInputChange = (e) => {
+    setName(e.currentTarget.value);
+    setId(nanoid());
+  };
+
   const handleSubmit = (e) => {
-    if (number.length > 13) return alert("Please enter correct phone number");
+    if (number.length > 13) {
+      return alert("Please enter correct phone number");
+    }
+
+    const checkName = contacts.find((el) => el.name === name);
+
+    checkName === undefined
+      ? dispatch(add({ name, number, id }))
+      : alert(`${name} is already in contacts.`);
+
     e.preventDefault();
-    onSubmit({ name, number, id });
     reset();
   };
 
@@ -28,11 +41,6 @@ export default function Form({ onSubmit }) {
     setName("");
     setNumber("");
     setId("");
-  };
-
-  const handleInputChange = (e) => {
-    setName(e.currentTarget.value);
-    setId(nanoid());
   };
 
   return (
@@ -65,50 +73,6 @@ export default function Form({ onSubmit }) {
       <BtnSubmit onSubmit={handleSubmit}>Add contact</BtnSubmit>
     </FormContainer>
   );
-}
-
-Form.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
 };
 
-const FormContainer = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px 0;
-  width: 300px;
-  border-radius: 10px;
-  color: #fff;
-  background: linear-gradient(
-    335deg,
-    rgba(41, 30, 94, 1) 0%,
-    rgba(29, 59, 201, 1) 50%,
-    rgba(5, 196, 207, 1) 100%
-  );
-`;
-
-const BtnSubmit = styled.button.attrs(() => ({
-  type: "submit",
-}))`
-  position: relative;
-  padding: 5px 10px;
-  display: inline-block;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 29px;
-    background: rgba(2, 94, 252, 0.308);
-    border-radius: 5px;
-    transition: all 1.5s ease;
-  }
-  &:hover:before {
-    width: 100%;
-  }
-`;
+export default Form;

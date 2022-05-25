@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { Label, InputInner, ContainerInput } from "./Input.styled";
 
 const Input = ({
   title,
@@ -28,21 +28,3 @@ const Input = ({
 };
 
 export default Input;
-
-const Label = styled.h2`
-  text-align: center;
-  font-size: 20px;
-  margin-bottom: 5px;
-`;
-
-const InputInner = styled.input`
-  padding: 5px;
-  width: 228px;
-  opacity: 0.5;
-  border: none;
-  border-radius: 5px;
-`;
-
-const ContainerInput = styled.div`
-  margin-bottom: 20px;
-`;
