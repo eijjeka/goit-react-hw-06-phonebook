@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { remove } from "../Redux/contactsSlise";
+import { remove } from "../Redux/contactsSliсe";
 import {
   ContainerList,
   Title,

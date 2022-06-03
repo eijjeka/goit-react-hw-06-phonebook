@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { add } from "../Redux/contactsSlise";
+import { add, getContactState } from "../Redux/contactsSliсe";
 
 import Input from "../Input";
 import PhoneInput from "react-phone-number-input";
@@ -14,7 +14,7 @@ const Form = () => {
   const [number, setNumber] = useState("");
   const [id, setId] = useState("");
 
-  const contacts = useSelector((state) => state.contacts.items);
+  const contacts = useSelector(getContactState);
   const dispatch = useDispatch();
 
   const handleInputChange = (e) => {

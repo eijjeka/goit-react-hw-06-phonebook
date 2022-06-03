@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { ContainerSearch, Title, Input } from "./Filter.styled";
-import { filter } from "../Redux/contactsSlise";
+import { filter } from "../Redux/contactsSliсe";
 
 const Filter = () => {
   const dispatch = useDispatch();
